@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $userPosts = Post::all();
+        $userPosts = Post::where('user_id',auth()->id())->get();
         return view ('user.posts.index',compact('userPosts'));
     }
 
@@ -34,11 +34,12 @@ class PostController extends Controller
         if(request()->hasFile('image')){
             $imagePath = request()->file('image')->store('posts', 'public');
         }
-        $post = auth()->user()->posts()->firstOrCreate([
+        $post = auth()->user()->posts()->Create([
             'title' =>  request()->title,
             'post' => request()->post,
             'image' => $imagePath ?? null,
             'category_id' => request()->category_id,
+            // 'user_id' =>auth()->id(),handled automatically by auth()->user()->posts()->Create
          ]);
          
          if (!empty(request()->tags)) {
@@ -51,17 +52,26 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        if($post->user_id !== auth()->id()){
+            abort(403);
+        }
         return view('user.posts.show',compact('post'));
     }
 
     public function edit(Post $post)
     {
+        if($post->user_id !== auth()->id()){
+            abort(403);
+        }
         $categories = Category::all();
         $tags = Tag::all();
         return view('user.posts.edit',compact('post','categories','tags'));
     }
     public function update(Post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
+        }
         request()->validate([
             'title' => 'required|string|min:3|max:255',
             'post' => 'required|string|min:15',
@@ -88,7 +98,10 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->delete();
+        if($post->user_id !== auth()->id()){
+            abort(403);
+        }
+        Storage::disk('public')->delete($post->image);
         return to_route('user.posts.index')->with('success','post deleted successfully');
     }
 }

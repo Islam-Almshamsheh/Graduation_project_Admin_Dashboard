@@ -35,20 +35,6 @@
   <!-- Content Wrapper. Contains page content -->
   @include('backend.layouts.content-wrapper')
   
-  <!-- Success Message Toast -->
-  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
-    @if(session('success'))
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
-      <div class="d-flex">
-        <div class="toast-body">
-          <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-    </div>
-    @endif
-  </div>
-
   @yield('content')
   <!-- /.content-wrapper -->
 
@@ -60,7 +46,7 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong>BlogsWebsite </strong>
+    <strong>UniGuide </strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>location</b> Amman
@@ -105,6 +91,14 @@
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script src="{{asset("backend/dist/js/adminlte.min.js")}}"></script>
+<script src="{{asset("backend/plugins/jquery/jquery.min.js")}}"></script>
+<script src="{{asset("backend/plugins/jquery-knob/jquery.knob.min.js")}}"></script>
+<script src="{{ asset('backend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{asset("backend/plugins/flot/jquery.flot.js")}}"></script>
+<script src="{{asset("backend/plugins/flot/plugins/jquery.flot.resize.js")}}"></script>
+<script src="{{asset("backend/plugins/flot/plugins/jquery.flot.pie.js")}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @yield('script')
 <script>
   $(function () {
@@ -123,19 +117,8 @@
     });
   });
 </script>
-<script>
-  // Initialize toast notifications
-  document.addEventListener('DOMContentLoaded', function() {
-    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
-    const toastList = toastElList.map(function(toastEl) {
-      return new bootstrap.Toast(toastEl, {
-        animation: true,
-        autohide: true,
-        delay: 5000
-      }).show()
-    })
-  })
 
+<script>
   // Show success message using SweetAlert2
   @if(session('success'))
   Swal.fire({

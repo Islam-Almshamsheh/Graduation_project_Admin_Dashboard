@@ -81,6 +81,7 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+
         $categories = Category::all();
         return view('admin.posts.edit',compact('post','categories'));
     }
@@ -96,7 +97,7 @@ class PostController extends Controller
         ]);
         if(request()->hasFile('image')){
             if($post->image) {
-                Storage::delete($post->image);//delete image if exists
+                Storage::disk('public')->delete($post->image);//delete image if exists
             }
             $imagePath = request()->file('image')->store('posts', 'public');
         }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') {{ $post->title }} | BlogsWebsite @endsection
+@section('title') {{ $post->title }} | UniGuide @endsection
 
 @section('scripts')
     @vite(['resources/css/app.css', 'resources/js/app.js'])

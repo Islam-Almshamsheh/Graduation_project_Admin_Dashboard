@@ -20,6 +20,7 @@ Route::view('/about','pages.about')->name('about');
 
 Route::middleware(['auth'])->group(function () {
     Route::view('/admin/dashboard', 'admin.dashboard')->name('admin.dashboard');
+    Route::view('admin/statistics', 'admin.statistics')->name( 'admin.statistics');
     Route::view('/user/dashboard', 'user.dashboard')->name('user.dashboard');
 });
 

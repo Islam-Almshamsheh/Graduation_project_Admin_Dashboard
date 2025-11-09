@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{{asset('backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Blog</span>
+      <span class="brand-text font-weight-light">UniGuide</span>
     </a>
 
     <!-- Sidebar -->
@@ -50,6 +50,14 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route(Str::lower(auth()->user()->role).'.statistics')}}" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>General Statistics</p>
+                </a>
+              </li>
+            </ul>
           </li>
           
           <!-- admin will access all menus user will only access Dashboard and logout -->
@@ -58,7 +66,7 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Users Management
+                Students Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -66,7 +74,7 @@
               <li class="nav-item">
                 <a href="{{route('users.index')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>All users</p>
+                  <p>All Students</p>
                 </a>
               </li>
             </ul>
@@ -74,7 +82,7 @@
               <li class="nav-item">
                 <a href="{{ route("users.create") }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>create user</p>
+                  <p>create Student</p>
                 </a>
               </li>
             </ul>
@@ -110,7 +118,7 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Posts Management
+                Event Content Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -119,7 +127,7 @@
               <li class="nav-item">
                 <a href="{{ route( 'admin.posts.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>All posts</p>
+                  <p>All Events</p>
                 </a>
               </li>
             </ul>
@@ -128,7 +136,7 @@
               <li class="nav-item">
                 <a href="{{route('admin.posts.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>create post</p>
+                  <p>create Event</p>
                 </a>
               </li>
             </ul>
@@ -137,7 +145,7 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Tags Management
+                Event Tags Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
