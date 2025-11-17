@@ -1,97 +1,90 @@
 @extends('backend.layouts.app')
+@section('title') Create Event @endsection
 
-@section('title') Create Post @endsection
 @section('content')
+@section('content-header') Create Event @endsection
+@section('card-title') Add Event @endsection
 
-@section('content-header') Create Post @endsection
-@section('card-title') Post Info @endsection
 @section('main-content')
-<section class="content">
-  <div class="container-fluid">
-    <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Add Post</h3>
-        </div>
+<!-- form start -->
+<form method="POST" action="#">
+    @csrf
+    <div class="card-body">
 
-        <div class="card-body">
-          <div class="form-group">
-            <label for="title">Post Title</label>
+        {{-- Event Title --}}
+        <div class="form-group">
+            <label for="title">Event Title</label>
             <input type="text"
-              id="title"
-              name="title"
-              value="{{ old('title') }}"
-              class="form-control @error('title') is-invalid @enderror">
+                   name="title"
+                   class="form-control @error('title') is-invalid @enderror"
+                   id="title"
+                   placeholder="Event Title"
+                   value="{{ old('title') }}">
             @error('title')
-              <div class="invalid-feedback">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
             @enderror
-          </div>
+        </div>
 
-          <div class="form-group">
-            <label for="post">Post</label>
-            <textarea
-              id="post"
-              name="post"
-              class="form-control @error('post') is-invalid @enderror"
-              rows="20">{{ old('post') }}</textarea>
-            @error('post')
-              <div class="invalid-feedback">{{ $message }}</div>
+        {{-- Event Date --}}
+        <div class="form-group">
+            <label for="date">Event Date</label>
+            <input type="date"
+                   name="date"
+                   class="form-control @error('date') is-invalid @enderror"
+                   id="date"
+                   value="{{ old('date') }}">
+            @error('date')
+            <div class="invalid-feedback">{{ $message }}</div>
             @enderror
-          </div>
+        </div>
 
-          <div class="form-group">
-            <label for="category_id">Category</label>
-            <select id="category_id"
-              name="category_id"
-              class="form-control custom-select @error('category_id') is-invalid @enderror">
-              <option selected disabled>Select a category</option>
-              @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                  {{ $category->name }}
-                </option>
-              @endforeach
+        {{-- Location --}}
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text"
+                   name="location"
+                   class="form-control @error('location') is-invalid @enderror"
+                   id="location"
+                   placeholder="Location"
+                   value="{{ old('location') }}">
+            @error('location')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Event Category --}}
+        <div class="form-group">
+            <label for="category">Event Category</label>
+            <select class="custom-select form-control-border @error('category') is-invalid @enderror"
+                    id="category"
+                    name="category">
+                <option value="online" {{ old('category') == 'online' ? 'selected' : '' }}>Online</option>
+                <option value="offline" {{ old('category') == 'offline' ? 'selected' : '' }}>Offline</option>
             </select>
-            @error('category_id')
-              <div class="invalid-feedback">{{ $message }}</div>
+            @error('category')
+            <div class="invalid-feedback">{{ $message }}</div>
             @enderror
-          </div>
-          <div class="form-group">
-              <label class="required" for="tags">Tags</label>
-              <input
-               type="text"
-               name="tags"
-               id="tags"
-               class="form-control @error('tags') is-invalid @enderror"
-               value="{{ old('tags') }}"
-              >
-              @error('tags')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-              <span class="help-block">Separate tags with commas</span>
-          </div>
-
-          <div class="form-group">
-            <label for="image">Upload Image</label>
-            <input type="file"
-              class="form-control @error('image') is-invalid @enderror"
-              id="image"
-              name="image"
-              value="{{ old('image') }}"
-              >
-            @error('image')
-              <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-          </div>
-
         </div>
 
-        <div class="card-footer">
-          <input type="submit" value="Create New Post" class="btn btn-success">
+        {{-- Description --}}
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description"
+                      class="form-control @error('description') is-invalid @enderror"
+                      id="description"
+                      placeholder="Event Description"
+                      style="min-height:150px;">{{ old('description') }}</textarea>
+            @error('description')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-      </div>
-    </form>
-  </div>
-</section>
+
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </div>
+</form>
 @endsection
 @endsection

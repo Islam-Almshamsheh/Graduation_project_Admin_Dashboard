@@ -25,13 +25,9 @@
     <img class="animation__wobble" src="{{asset('backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
   </div>
 
-  <!-- Navbar -->
+  
   @include('backend.layouts.navbar')
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
   @include('backend.layouts.sidebar')
-
   <!-- Content Wrapper. Contains page content -->
   @include('backend.layouts.content-wrapper')
   
@@ -62,27 +58,23 @@
 <script src="{{asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- overlayScrollbars -->
 <script src="{{asset('backend/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('backend/dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE App (load only once, not both .js and .min.js) -->
+<script src="{{asset('backend/dist/js/adminlte.min.js')}}"></script>
 
-<!-- PAGE PLUGINS -->
-<!-- jQuery Mapael -->
-<script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="plugins/raphael/raphael.min.js"></script>
+<!-- Optional plugins (only if your dashboard uses them) -->
+<script src="{{asset('backend/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<script src="{{asset('backend/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<script src="{{asset('backend/plugins/flot/jquery.flot.js')}}"></script>
+<script src="{{asset('backend/plugins/flot/plugins/jquery.flot.resize.js')}}"></script>
+<script src="{{asset('backend/plugins/flot/plugins/jquery.flot.pie.js')}}"></script>
+<script src="{{asset('backend/plugins/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('backend/plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
 <script src="{{asset('backend/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('backend/plugins/chart.js/Chart.min.js')}}"></script>
 
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="{{asset('backend/dist/js/demo.js')}}"></script> -->
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('backend/dist/js/pages/dashboard2.js')}}"></script>
-<!-- DataTables  & Plugins -->
+<!-- DataTables & Plugins -->
 <script src="{{asset('backend/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
 <script src="{{asset('backend/plugins/jszip/jszip.min.js')}}"></script>
@@ -91,35 +83,38 @@
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-<script src="{{asset("backend/dist/js/adminlte.min.js")}}"></script>
-<script src="{{asset("backend/plugins/jquery/jquery.min.js")}}"></script>
-<script src="{{asset("backend/plugins/jquery-knob/jquery.knob.min.js")}}"></script>
-<script src="{{ asset('backend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<script src="{{asset("backend/plugins/flot/jquery.flot.js")}}"></script>
-<script src="{{asset("backend/plugins/flot/plugins/jquery.flot.resize.js")}}"></script>
-<script src="{{asset("backend/plugins/flot/plugins/jquery.flot.pie.js")}}"></script>
+
+<!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @yield('script')
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 
 <script>
-  // Show success message using SweetAlert2
+  $(function () {
+    // Initialize DataTables if present
+    if ($("#example1").length) {
+      $("#example1").DataTable({
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }
+
+    if ($("#example2").length) {
+      $('#example2').DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: false,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: true,
+      });
+    }
+  });
+
+  // SweetAlert Success message
   @if(session('success'))
   Swal.fire({
     icon: 'success',
@@ -137,5 +132,6 @@
   })
   @endif
 </script>
+
 </body>
 </html>

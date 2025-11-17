@@ -1,93 +1,71 @@
 @extends('backend.layouts.app')
-@section('title') Index @endsection
+
+@section('title') All Events @endsection
 @section('content')
-@section('content-header') All Posts @endsection
-@section('card-title') Posts @endsection
+@section('content-header') All Events @endsection
+@section('card-title') Events @endsection
+
 @section('main-content')
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
+@php
+// Sample events array (frontend only, no DB)
+$events = [
+    [
+        'id' => 1,
+        'title' => 'AI Conference',
+        'date' => '2025-12-15',
+        'location' => 'Amman',
+        'category' => 'online',
+        'description' => 'An online conference about AI advancements.'
+    ],
+    [
+        'id' => 2,
+        'title' => 'Laravel Workshop',
+        'date' => '2025-12-20',
+        'location' => 'Irbid',
+        'category' => 'offline',
+        'description' => 'Hands-on Laravel workshop for beginners.'
+    ],
+    [
+        'id' => 3,
+        'title' => 'Flutter Meetup',
+        'date' => '2025-12-22',
+        'location' => 'Online',
+        'category' => 'online',
+        'description' => 'A meetup discussing Flutter projects and tips.'
+    ],
+];
+@endphp
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">All Events</h3>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
                     <th>No</th>
                     <th>Title</th>
-                    <th>Created by</th>
+                    <th>Date</th>
+                    <th>Location</th>
                     <th>Category</th>
-                    <th>Related Tags</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($posts as $post)
-                  <tr>
-                    <td>{{$post->id}}</td>
-                    <td>{{$post->title}}</td>
-                    <td>{{$post->user->email ?? 'No User'}}</td><!-- name is not unique -->
-                    <td>{{$post->category->name ?? 'No Category'}}</td>
-                    <td>
-                        @if ($post->tags->isNotEmpty())
-                          {{ $post->tags->pluck('name')->join(', ') }}
-                        @else
-                          No Tags
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route("admin.posts.show",$post) }}" class="btn btn-info">Show</a>
-
-                        <a href="{{ route("admin.posts.edit",$post) }}" class="btn btn-info">Edit</a>
-                        
-                        <form id="delete-form-{{ $post->id }}" style="display: inline;" method="POST" action="{{ route('admin.posts.destroy', $post->id) }}">
-                          @csrf
-                          @method('DELETE')
-                          <button type="button" class="btn btn-danger" onclick="confirmation(event, {{ $post->id }})">Delete</button>
-                        </form>
-                    </td>
-                  
-                  </tr>
-                   @endforeach
-                    
-                    
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Title</th>
-                    <th>Created by</th>
-                    <th>Category</th>
-                    <th>Related Tags</th>
-                    <th>Action</th>
-                  </tr>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            
-    </section>
-    
-    <!-- /.content -->
-@endsection {{-- closes main-content --}}
-@endsection {{-- closes content --}}
-
-@section("script")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-function confirmation(ev, id) {
-  ev.preventDefault();
-  var form = document.getElementById('delete-form-' + id);
-
-  swal({
-    title: "Are you sure to delete this?",
-    text: "You will not be able to revert this!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
-      form.submit();
-    }
-  });
-}
-</script>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($events as $event)
+                <tr>
+                    <td>{{ $event['id'] }}</td>
+                    <td>{{ $event['title'] }}</td>
+                    <td>{{ $event['date'] }}</td>
+                    <td>{{ $event['location'] }}</td>
+                    <td>{{ ucfirst($event['category']) }}</td>
+                    <td>{{ $event['description'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection
 @endsection
