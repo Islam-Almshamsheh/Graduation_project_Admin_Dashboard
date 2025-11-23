@@ -19,8 +19,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags', 'user', 'category')->latest()->take(6)->get();
-        return view('pages.home', compact('posts'));
+        // $posts = Post::with('tags', 'user', 'category')->latest()->take(6)->get();
+        // return view('pages.home', compact('posts'));
+        return view('pages.home');
     }
     
     public function show(Post $post)

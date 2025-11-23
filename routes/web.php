@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -11,18 +11,22 @@ use App\Http\Controllers\Admin\UserController;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Default login & register routes added after requiring laravel/uI
-Auth::routes([ 'reset' => false,
-                        'verify' => false   ]);
+Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/show/{post}', [App\Http\Controllers\HomeController::class, 'show'])->name('post.show');
 Route::view('/about','pages.about')->name('about');
 
-Route::middleware(['auth'])->group(function () {
-    Route::view('/admin/dashboard', 'admin.dashboard')->name('admin.dashboard');
-    Route::view('admin/statistics', 'admin.statistics')->name( 'admin.statistics');
-    Route::view('/user/dashboard', 'user.dashboard')->name('user.dashboard');
+Route::middleware(['admin'])->prefix('admin')->group(function () {
+    Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
+    Route::view('/statistics', 'admin.statistics')->name('admin.statistics');
+    Route::resource('posts', AdminPostController::class, ['as' => 'admin']);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('tags', TagController::class);
 });
+
 
 Route::prefix('users')->group(function(){
     Route::get('', [UserController::class, 'index'])->name('users.index');
