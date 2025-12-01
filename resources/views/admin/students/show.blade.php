@@ -15,7 +15,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">User Name</span>
                 <span class="info-box-number">
-                  {{ $user->name }}
+                  {{ $student['full_name'] }}
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -30,7 +30,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Email</span>
-                <span class="info-box-number"> {{ $user->email }}</span>
+                <span class="info-box-number"> {{ $student['email'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -47,7 +47,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">ID</span>
-                <span class="info-box-number">{{ $user->id }}</span>
+                <span class="info-box-number">{{ $student['uid'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -61,7 +61,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Role</span>
-                <span class="info-box-number">{{ $user->role }}</span>
+                <span class="info-box-number">{{ $student['major'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>

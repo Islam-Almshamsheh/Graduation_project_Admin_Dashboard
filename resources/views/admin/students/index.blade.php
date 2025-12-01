@@ -7,20 +7,6 @@
 
 @section('main-content')
 
-@php
-// ===================== VARIABLES =====================
-$students = [
-    (object)['id'=>1,'name'=>'Ahmad Khaled','email'=>'ahmad@example.com','enrollment_year'=>2022,'gpa'=>3.5],
-    (object)['id'=>2,'name'=>'Rana Salem','email'=>'rana@example.com','enrollment_year'=>2023,'gpa'=>3.8],
-    (object)['id'=>3,'name'=>'Omar Alzoubi','email'=>'omar@example.com','enrollment_year'=>2022,'gpa'=>2.9],
-];
-
-$admins = [
-    (object)['id'=>1,'name'=>'Admin One','email'=>'admin1@example.com'],
-    (object)['id'=>2,'name'=>'Admin Two','email'=>'admin2@example.com'],
-];
-@endphp
-
 {{-- ===================== STUDENTS & ADMINS SUMMARY CARD ===================== --}}
 <div class="row">
     <div class="col-md-12">
@@ -75,7 +61,7 @@ $admins = [
                             <th>Serial</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Enrollment Year</th>
+                            <th>Academic Year</th>
                             <th>GPA</th>
                             <th>Action</th>
                         </tr>
@@ -83,15 +69,17 @@ $admins = [
                     <tbody>
                         @foreach($students as $student)
                         <tr>
-                            <td>{{ $student->id }}</td>
-                            <td>{{ $student->name }}</td>
-                            <td>{{ $student->email }}</td>
-                            <td>{{ $student->enrollment_year }}</td>
-                            <td>{{ $student->gpa }}</td>
+                            <td>{{ $student['uid'] }}</td>
+                            <td>{{ $student['full_name'] }}</td>
+                            <td>{{ $student['email'] }}</td>
+                            <td>{{ $student['academic_year'] }}</td>
+                            <td>{{ $student['gpa'] }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Show</button>
-                                <button class="btn btn-warning btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="alert('Delete {{$student->name}}')">Delete</button>
+                                <a href="{{ route('students.show', $student['full_name']) }}">
+                                    <button class="btn btn-info btn-sm">Show</button>
+                                </a>
+                                    <button class="btn btn-warning btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="alert('Delete {{$student['full_name']}}')">Delete</button>
                             </td>
                         </tr>
                         @endforeach
@@ -101,7 +89,7 @@ $admins = [
                             <th>Serial</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Enrollment Year</th>
+                            <th>Academic Year</th>
                             <th>GPA</th>
                             <th>Action</th>
                         </tr>
@@ -129,9 +117,9 @@ $admins = [
                     <tbody>
                         @foreach($admins as $admin)
                         <tr>
-                            <td>{{ $admin->id }}</td>
-                            <td>{{ $admin->name }}</td>
-                            <td>{{ $admin->email }}</td>
+                            <td>{{ $admin['uid'] }}</td>
+                            <td>{{ $admin['full_name'] }}</td>
+                            <td>{{ $admin['email'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>

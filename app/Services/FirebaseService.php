@@ -18,33 +18,33 @@ class FirebaseService
         ]);
     }
 
-    public function createDocument($collection, $data)
-    {
-        $formattedFields = [];
+    // public function createDocument($collection, $data)
+    // {
+    //     $formattedFields = [];
 
-        foreach ($data as $key => $value) {
-            // Automatically detect type for simplicity, here we use stringValue
-            $formattedFields[$key] = ['stringValue' => $value];
-        }
+    //     foreach ($data as $key => $value) {
+    //         // Automatically detect type for simplicity, here we use stringValue
+    //         $formattedFields[$key] = ['stringValue' => $value];
+    //     }
 
-        $response = $this->client->post($collection, [
-            'json' => ['fields' => $formattedFields]
-        ]);
+    //     $response = $this->client->post($collection, [
+    //         'json' => ['fields' => $formattedFields]
+    //     ]);
 
-        return json_decode($response->getBody(), true);
-    }
+    //     return json_decode($response->getBody(), true);
+    // }
 
-    public function getCollection($collection)
-    {
-        $response = $this->client->get($collection);
-        return json_decode($response->getBody(), true);
-    }
+    // public function getCollection($collection)
+    // {
+    //     $response = $this->client->get($collection);
+    //     return json_decode($response->getBody(), true);
+    // }
 
-    public function deleteDocument($collection, $documentId)
-    {
-        $response = $this->client->delete("{$collection}/{$documentId}");
-        return json_decode($response->getBody(), true);
-    }
+    // public function deleteDocument($collection, $documentId)
+    // {
+    //     $response = $this->client->delete("{$collection}/{$documentId}");
+    //     return json_decode($response->getBody(), true);
+    // }
 
     protected function formatFields(array $data)
     {
@@ -163,6 +163,55 @@ class FirebaseService
             'json' => ['fields' => $formattedFields]
         ]);
 
+        return json_decode($response->getBody(), true);
+    }
+
+    // -------------------------
+    // Firestore CRUD
+    // -------------------------
+
+    // Get all documents in a collection
+    public function getCollection($collection)
+    {
+        $response = $this->client->get($collection);
+        return json_decode($response->getBody(), true);
+    }
+
+    // Get a single document by ID
+    public function getDocument($collection, $documentId)
+    {
+        $response = $this->client->get("{$collection}");//"{$collection}/{$documentId}"
+        return json_decode($response->getBody(), true);
+    }
+
+    // Create a new document in a collection
+    public function createDocument($collection, array $data)
+    {
+        $formattedFields = $this->formatFields($data);
+
+        $response = $this->client->post($collection, [
+            'json' => ['fields' => $formattedFields]
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    // Update an existing document
+    public function updateDocument($collection, $documentId, array $data)
+    {
+        $formattedFields = $this->formatFields($data);
+
+        $response = $this->client->patch("{$collection}/{$documentId}", [
+            'json' => ['fields' => $formattedFields]
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    // Delete a document
+    public function deleteDocument($collection, $documentId)
+    {
+        $response = $this->client->delete("{$collection}/{$documentId}");
         return json_decode($response->getBody(), true);
     }
 }

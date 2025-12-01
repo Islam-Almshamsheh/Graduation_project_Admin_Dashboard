@@ -6,7 +6,7 @@ use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StudentController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -28,17 +28,15 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
 });
 
 
-Route::prefix('users')->group(function(){
-    Route::get('', [UserController::class, 'index'])->name('users.index');
-    Route::get('/user',[UserController::class,'create'])->name('users.create');
-    Route::post('',[UserController::class,'store'])->name('users.store');
-    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
-    Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-});
+    Route::get('', [StudentController::class, 'index'])->name('students.index');
+    Route::get('/student',[StudentController::class,'create'])->name('students.create');
+    Route::post('',[StudentController::class,'store'])->name('students.store');
+    Route::get('/{student}/edit', [StudentController::class, 'edit'])->name('students.edit');
+    Route::put('/{student}', [StudentController::class, 'update'])->name('students.update');
+    Route::get('/{student}', [StudentController::class, 'show'])->name('students.show');
+    Route::delete('/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 
-Route::middleware(['auth','admin'])->prefix('admin/posts')->name('admin.posts.')->group(function(){
+Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('',[AdminPostController::class, 'index'])->name('index');
     Route::get('/post',[AdminPostController::class, 'create'])->name('create');
     Route::post('',[AdminPostController::class, 'store'])->name('store');
@@ -66,7 +64,7 @@ Route::prefix('tags')->group( function(){
     Route::delete('/{tag}',[TagController::class,'destroy'])->name('tags.destroy');
 });
 
-Route::middleware(['auth','user'])->prefix('user/posts')->name('user.posts.')->group(function(){
+Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('',[UserPostController::class, 'index'])->name('index');
     Route::get('/post',[UserPostController::class, 'create'])->name('create');
     Route::post('',[UserPostController::class, 'store'])->name('store');
